@@ -10,8 +10,7 @@ authors:
   - Jack Parker-Holder
   - Edward Grefenstette
   - Tim Rocktäschel
-author_notes:
-  - Equal contribution
+author_notes: []
 publication: In Conference on Lifelong Learning Agents 2022
 summary: ""
 url_dataset: https://github.com/wowchemy/wowchemy-hugo-themes
@@ -30,7 +29,7 @@ image:
   preview_only: false
 date: 2022-07-23T18:37:16.642Z
 url_slides: ""
-publishDate: 2017-01-01T00:00:00Z
+publishDate: 2017-01-01T00:00:00.000Z
 url_poster: ""
 url_code: https://github.com/wowchemy/wowchemy-hugo-themes
 ---

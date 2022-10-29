@@ -4,7 +4,9 @@ role: Machine Learning Researcher
 avatar_filename: avatar.jpg
 bio: ""
 interests:
-  - Wha
+  - Reinforcement Learning
+  - Open-endedlearning
+  - idk
 social:
   - icon: envelope
     icon_pack: fas
@@ -44,10 +46,6 @@ highlight_name: true
 first_name: Alice
 email: ""
 ---
-Alice Bighetti is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.I 
-
 I﻿ am a Machine Learning Researcher on the Reinforcement Learning team at VivaCity, where I work on using RL for traffic control.
 
 I completed my MSc in Machine Learning at UCL, where I worked on integrating prior knowledge of policies into downstream tasks in RL.  Before this, I got my BA in Computer Science from the University of Cambridge.

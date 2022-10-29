@@ -15,8 +15,6 @@ social:
     icon_pack: fab
     link: https://twitter.com/mitrma
     label: ""
-    display:
-      header: true
   - icon: graduation-cap
     icon_pack: fas
     link: https://scholar.google.com/citations?authuser=1&user=ubOhfnIAAAAJ

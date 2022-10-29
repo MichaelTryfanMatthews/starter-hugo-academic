@@ -11,7 +11,7 @@ authors:
   - Edward Grefenstette
   - Tim Rocktäschel
 author_notes: []
-publication: ICLR Workshop on Agent Learning in Open-Endedness.
+publication: ICLR Workshop on Agent Learning in Open-Endedness
 summary: ""
 url_dataset: ""
 url_project: ""

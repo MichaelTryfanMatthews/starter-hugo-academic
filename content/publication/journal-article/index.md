@@ -3,7 +3,7 @@ abstract: ""
 slides: ""
 url_pdf: https://openreview.net/forum?id=rHSVHmDWI-9
 publication_types:
-  - "2"
+  - "1"
 authors:
   - admin
   - Mikayel Samvelyan

@@ -1,6 +1,18 @@
 ---
 title: Multi-modal fusion by meta-initialization
-abstract: ""
+abstract: When experience is scarce, models may have insufficient information to
+  adapt to a new task. In this case, auxiliary information - such as a textual
+  description of the task - can enable improved task inference and adaptation.
+  In this work, we propose an extension to the Model-Agnostic Meta-Learning
+  algorithm (MAML), which allows the model to adapt using auxiliary information
+  as well as task experience. Our method, Fusion by Meta-Initialization (FuMI),
+  conditions the model initialization on auxiliary information using a
+  hypernetwork, rather than learning a single, task-agnostic initialization.
+  Furthermore, motivated by the shortcomings of existing multi-modal few-shot
+  learning benchmarks, we constructed iNat-Anim - a large-scale image
+  classification dataset with succinct and visually pertinent textual class
+  descriptions. On iNat-Anim, FuMI significantly outperforms uni-modal baselines
+  such as MAML in the few-shot regime.
 slides: ""
 url_pdf: https://arxiv.org/abs/2210.04843
 publication_types:

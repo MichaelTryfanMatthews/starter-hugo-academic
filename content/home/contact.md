@@ -16,14 +16,7 @@ content:
   autolink: true
 
   # Contact details (edit or remove options as required)
-  email: test@example.org
-  address:
-    street: 450 Serra Mall
-    city: Stanford
-    region: CA
-    postcode: '94305'
-    country: United States
-    country_code: US
+  email: michael.tryfan.matthews [at] gmail [dot] com
 
 design:
   columns: '2'

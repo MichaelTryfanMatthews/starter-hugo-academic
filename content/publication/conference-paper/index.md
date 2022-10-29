@@ -1,7 +1,7 @@
 ---
 abstract: ""
 slides: ""
-url_pdf: "https://arxiv.org/abs/2207.11584"
+url_pdf: https://arxiv.org/abs/2207.11584
 publication_types:
   - "1"
 authors:
@@ -20,7 +20,7 @@ url_source: ""
 url_video: ""
 title: Hierarchical Kickstarting for Skill Transfer in Reinforcement Learning
 doi: ""
-featured: true
+featured: false
 tags: []
 projects: []
 image:

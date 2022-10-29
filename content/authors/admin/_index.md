@@ -42,7 +42,7 @@ highlight_name: true
 first_name: Alice
 email: ""
 ---
-I﻿ am a Machine Learning Researcher on the Reinforcement Learning team at VivaCity, where I work on using RL for traffic control.
+I﻿ am a Machine Learning Researcher on the Reinforcement Learning team at [VivaCity](https://vivacitylabs.com/), where I work on using RL for traffic control.
 
 I completed my MSc in Machine Learning at UCL, where I worked on integrating prior knowledge of policies into downstream tasks in RL.  Before this, I got my BA in Computer Science from the University of Cambridge.
 

@@ -44,7 +44,7 @@ email: ""
 ---
 I﻿ am a Machine Learning Researcher on the Reinforcement Learning team at [VivaCity](https://vivacitylabs.com/technology/junction-control/), where I work on using RL for traffic control.
 
-I completed my MSc in Machine Learning at [University College London](https://www.ucl.ac.uk/), where I worked on knowledge transfer in RL with [UCL DARK Lab](https://dark.cs.ucl.ac.uk/). Before this, I got my BA in Computer Science from the [University of Cambridge](https://www.cam.ac.uk/), where I worked on data visualisation.
+I completed my MSc in Machine Learning at [University College London](https://www.ucl.ac.uk/), where I worked on transfer learning in RL with [UCL DARK Lab](https://dark.cs.ucl.ac.uk/). Before this, I got my BA in Computer Science from the [University of Cambridge](https://www.cam.ac.uk/), where I worked on data visualisation.
 
 I﻿ have previously completed software engineering internships at [G-Research](https://www.gresearch.co.uk/) and [PlayFusion](https://playfusion.com/)
 , where I worked on internal trading software and RL for video games.

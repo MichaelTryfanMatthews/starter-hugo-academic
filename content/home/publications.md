@@ -1,6 +1,6 @@
 ---
 widget: collection
-widget_id: pubs
+widget_id: publications
 headless: true
 weight: 90
 title: Publications
@@ -23,4 +23,3 @@ design:
   view: citation
   columns: "2"
 ---
-

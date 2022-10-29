@@ -1,7 +1,7 @@
 ---
 abstract: ""
 slides: ""
-url_pdf: http://arxiv.org/pdf/1512.04133v1
+url_pdf: https://openreview.net/forum?id=rHSVHmDWI-9
 publication_types:
   - "2"
 authors:

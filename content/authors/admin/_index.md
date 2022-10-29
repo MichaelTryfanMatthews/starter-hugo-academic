@@ -1,7 +1,7 @@
 ---
 title: Michael Matthews
 role: Machine Learning Researcher
-avatar_filename: pic.jpg
+avatar_filename: avatar.jpg
 bio: ""
 interests:
   - Wha

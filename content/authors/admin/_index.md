@@ -6,6 +6,7 @@ bio: ""
 interests:
   - Deep Reinforcement Learning
   - Open-Ended Learning
+  - Evolutionary Algorithms
 social:
   - icon: envelope
     icon_pack: fas

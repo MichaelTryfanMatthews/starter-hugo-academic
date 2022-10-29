@@ -4,9 +4,8 @@ role: Machine Learning Researcher
 avatar_filename: avatar.jpg
 bio: ""
 interests:
-  - Reinforcement Learning
-  - Open-endedlearning
-  - idk
+  - Deep Reinforcement Learning
+  - Open-Ended Learning
 social:
   - icon: envelope
     icon_pack: fas

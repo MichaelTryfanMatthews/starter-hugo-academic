@@ -27,19 +27,16 @@ social:
     icon_pack: fab
     link: https://www.linkedin.com/in/michael-matthews-b7a5b7158/
 organizations:
-  - name: Stanford University
-    url: https://www.stanford.edu/
+  - name: VivaCity
+    url: https://vivacitylabs.com/technology/junction-control/
 education:
   courses:
-    - course: PhD in Artificial Intelligence
-      institution: Stanford University
-      year: 2012
-    - course: MEng in Artificial Intelligence
-      institution: Massachusetts Institute of Technology
-      year: 2009
-    - course: BSc in Artificial Intelligence
-      institution: Massachusetts Institute of Technology
-      year: 2008
+    - course: MSc in Machine Learning
+      institution: University College London
+      year: 2021
+    - course: BA in Computer Science
+      institution: University of Cambridge
+      year: 2020
 superuser: true
 last_name: Bighetti
 highlight_name: true

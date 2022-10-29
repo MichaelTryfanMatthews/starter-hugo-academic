@@ -13,7 +13,7 @@ social:
   - icon: twitter
     icon_pack: fab
     link: https://twitter.com/mitrma
-    label: Follow me on Twitter
+    label: ""
     display:
       header: true
   - icon: graduation-cap

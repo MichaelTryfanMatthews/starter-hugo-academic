@@ -16,7 +16,7 @@ content:
   autolink: true
 
   # Contact details (edit or remove options as required)
-  email: michael.tryfan.matthews [at] gmail [dot] com
+  email: michael [dot] tryfan [dot] matthews [at] gmail [dot] com
 
 design:
   columns: '2'

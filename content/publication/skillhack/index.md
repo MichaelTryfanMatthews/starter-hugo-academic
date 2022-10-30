@@ -18,7 +18,7 @@ abstract: Practising and honing skills forms a fundamental component of how
 slides: ""
 url_pdf: https://openreview.net/forum?id=rHSVHmDWI-9
 publication_types:
-  - "1"
+  - "9"
 authors:
   - admin
   - Mikayel Samvelyan

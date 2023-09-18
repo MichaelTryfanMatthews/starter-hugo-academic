@@ -1,6 +1,6 @@
 ---
 title: Michael Matthews
-role: Machine Learning Researcher
+role: PhD Student
 avatar_filename: avatar.jpg
 bio: ""
 interests:

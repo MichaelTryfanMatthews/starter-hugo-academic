@@ -4,7 +4,7 @@ role: Machine Learning Researcher
 avatar_filename: avatar.jpg
 bio: ""
 interests:
-  - Deep Reinforcement Learning
+  - Reinforcement Learning
   - Open-Ended Learning
   - Evolutionary Algorithms
 social:
@@ -29,10 +29,13 @@ organizations:
     url: https://vivacitylabs.com/technology/junction-control/
 education:
   courses:
-    - course: MSc in Machine Learning
+    - course: DPhil Engineering Science
+      institution: University of Oxford
+      year: 2027
+    - course: MSc Machine Learning
       institution: University College London
       year: 2021
-    - course: BA in Computer Science
+    - course: BA Computer Science
       institution: University of Cambridge
       year: 2020
 superuser: true
@@ -41,8 +44,9 @@ highlight_name: true
 first_name: Alice
 email: ""
 ---
-I﻿ am a Machine Learning Researcher on the Reinforcement Learning team at [VivaCity](https://vivacitylabs.com/technology/junction-control/), where I work on using RL for traffic control.
+I﻿ am a first-year PhD student at the University of Oxford studying reinforcement learning in open-ended settings with additional interests in evolutionary algorithms and artificial life systems. I am supervised by [Dr. Jakob Foerster](https://www.jakobfoerster.com/) as part of [FLAIR](https://foersterlab.com/).
 
-I completed my MSc in Machine Learning at [University College London](https://www.ucl.ac.uk/), where I worked on transfer learning in RL with [UCL DARK Lab](https://ucldark.com/) under the supervision of [Tim Rocktäschel](https://rockt.github.io/) and [Edward Grefenstette](https://www.egrefen.com/). Before this, I obtained my BA in Computer Science from the [University of Cambridge](https://www.cam.ac.uk/), where I worked on data visualisation under the supervision of [Damon Wischik](https://www.cl.cam.ac.uk/~djw1005/).
+I completed my MSc in Machine Learning at University College London, where I worked on transfer learning in RL at [UCL DARK Lab](https://ucldark.com/) under the supervision of [Prof. Tim Rocktäschel](https://rockt.github.io/) and [Prof. Edward Grefenstette](https://www.egrefen.com/). Before this, I obtained my BA in Computer Science from the University of Cambridge.
 
-I﻿ have previously completed software engineering internships at [G-Research](https://www.gresearch.co.uk/) and [PlayFusion](https://playfusion.com/), where I worked on internal trading software and RL for video games.
+B﻿efore starting my PhD I worked for 2 years as a Machine Learning Researcher on the RL team at [VivaCity](https://vivacitylabs.com/technology/junction-control/), where I worked on using RL for traffic control.
+I﻿ have previously completed software engineering internships at [G-Research](https://www.gresearch.co.uk/) and [PlayFusion](https://playfusion.com/), where I worked on internal trading software and RL for video games respectively.

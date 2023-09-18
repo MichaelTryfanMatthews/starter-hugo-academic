@@ -25,8 +25,8 @@ social:
     icon_pack: fab
     link: https://www.linkedin.com/in/michael-matthews-b7a5b7158/
 organizations:
-  - name: VivaCity
-    url: https://vivacitylabs.com/technology/junction-control/
+  - name: University of Oxford
+    url: ""
 education:
   courses:
     - course: DPhil Engineering Science

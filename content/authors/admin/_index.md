@@ -44,7 +44,7 @@ highlight_name: true
 first_name: Alice
 email: ""
 ---
-I﻿ am a first-year PhD student at the University of Oxford studying reinforcement learning in open-ended settings with additional interests in evolutionary algorithms and artificial life systems. I am supervised by [Dr. Jakob Foerster](https://www.jakobfoerster.com/) as part of [FLAIR](https://foersterlab.com/).
+I﻿ am a first-year PhD student at the University of Oxford studying reinforcement learning in open-ended settings. I am supervised by [Dr. Jakob Foerster](https://www.jakobfoerster.com/) as part of [FLAIR](https://foersterlab.com/).
 
 I completed my MSc in Machine Learning at University College London, where I worked on transfer learning in RL at [UCL DARK Lab](https://ucldark.com/) under the supervision of [Prof. Tim Rocktäschel](https://rockt.github.io/) and [Prof. Edward Grefenstette](https://www.egrefen.com/). Before this, I obtained my BA in Computer Science from the University of Cambridge.
 

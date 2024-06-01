@@ -1,12 +1,12 @@
 ---
 title: Michael Matthews
 role: PhD Student
-avatar_filename: avatar.jpg
+avatar_filename: avatar.png
 bio: ""
 interests:
+  - Open-Endedness
   - Reinforcement Learning
-  - Open-Ended Learning
-  - Evolutionary Algorithms
+  - Exploration
 social:
   - icon: envelope
     icon_pack: fas

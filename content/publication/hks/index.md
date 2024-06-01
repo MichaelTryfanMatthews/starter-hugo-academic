@@ -26,7 +26,7 @@ authors:
   - Edward Grefenstette
   - Tim Rocktäschel
 author_notes: []
-publication: In Conference on Lifelong Learning Agents 2022
+publication: CoLLAs 2022
 summary: ""
 url_dataset: ""
 url_project: ""

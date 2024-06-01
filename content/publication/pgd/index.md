@@ -11,7 +11,7 @@ authors:
   - Benjamin Ellis
   - Jakob Foerster
 author_notes: []
-publication: In RLC 2024
+publication: RLC 2024
 summary: ""
 url_dataset: ""
 url_project: ""

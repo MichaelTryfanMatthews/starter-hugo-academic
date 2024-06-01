@@ -13,7 +13,7 @@ authors:
   - Samuel Coward
   - Jakob Foerster
 author_notes: []
-publication: In ICML 2024
+publication: ICML 2024
 summary: ""
 url_dataset: ""
 url_project: ""

@@ -1,0 +1,159 @@
+html { height: 100% }
+
+body {
+  margin: 0 auto;
+  margin-top: 10pt;
+  margin-bottom: 10pt;
+  max-width: 120ch;
+  line-height: 1.5;
+  background-color: #232729;
+  background-attachment: fixed;
+  height: 100%;
+}
+
+code {
+  font-family: "fira mono", monospace;
+}
+
+h1, h2 {
+  color: #6a8bad;
+  font-family: "fira mono", monospace;
+}
+
+h3 {
+  color: #7ea6cf;
+  font-family: "fira mono", monospace;
+}
+
+a {
+  color: #e65722;
+}
+
+a:hover   {
+  color: orangered;
+  text-decoration: none;
+}
+
+a:visited   {
+  color: #bf5730;
+}
+
+#container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  min-height: 100%;
+  padding: 0;
+  display: block;
+}
+
+#content {
+  font-size: 1.0em;
+  margin-left: 10pt;
+  margin-right: 10pt;
+  color: #bbbbbb;
+  font-family: "fira mono", monospace;
+}
+
+#content img {
+  max-width: 98%;
+}
+
+#content iframe {
+  max-width: 98%;
+}
+
+#content p {
+  margin-top: 20pt;
+  margin-bottom: 20pt;
+}
+
+#navbar-container {
+  padding: 0pt;
+  border-bottom: 1px dotted #353535;
+  padding-top: 16pt;
+  padding-bottom: 16pt;
+  vertical-align: middle;
+  line-height: 46px;
+  display: flex;
+  flex-wrap: wrap
+}
+
+#navbar-image-helper {
+  height: 100%;
+  vertical-align: middle;
+  display:inline-block
+}
+
+#logo {
+  padding-right: 16pt;
+  display:inline-block;
+  flex: none;
+  vertical-align: middle;
+  max-width: 20%;
+}
+
+#navbar {
+  color: #585858;
+  font-family: "fira mono", monospace;
+  font-size: 1.1em;
+  font-weight: bold;
+  height: 100%;
+  text-align: left;
+  display:inline-block;
+  flex: 1 1 auto;
+}
+
+a.navbarlink {
+  vertical-align: middle;
+  color: #e65722;
+  margin: 0;
+  padding: 0;
+  margin-right: 16pt;
+}
+
+a:visited.navbarlink  {
+  vertical-align: middle;
+  color: #e65722;
+  margin: 0;
+  padding: 0;
+}
+
+
+a:hover.navbarlink  {
+  vertical-align: middle;
+  color: orangered;
+  text-decoration: none;
+}
+
+.post-image {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border: 2px solid #c0c0c0;
+  max-width: 70%;
+}
+
+.inline-code {
+  font-family: "fira mono", monospace;
+  font-size: 11pt;
+  color: #f8f8f2;
+  background: #2e2f29;
+  border-radius: 3pt;
+}
+
+.math-varname {
+  font-style: italic;
+  font-weight: regular;
+  font-family: "georgia", serif;
+}
+
+#index-table {
+  border: 0px;
+}
+
+#index-table td{
+  border: 0px;
+  padding-top: 2pt;
+  padding-bottom: 2pt;
+}

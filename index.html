@@ -1,155 +1,68 @@
-
 <!DOCTYPE html>
-<html lang = "en">
+<html lang="en">
 <head>
-  <link rel = "stylesheet" type = "text/css" href = "assets/style.css">
-  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32">
-  <link rel="icon" type="image/png" href="/assets/favicon-16x16.png" sizes="16x16">
+  <meta charset="utf-8">
   <title>Michael Matthews</title>
+  <link rel="stylesheet" href="assets/style.css">
+<!--  <link rel="icon" type="image/png" href="/assets/favicon-32x32.png" sizes="32x32">-->
+  <link rel="icon" type="image/png" href="assets/favicon-16x16.png" sizes="16x16">
 </head>
 <body>
 
-<div id = "container">
-    <div id = "navbar-container">
-        <nav role = "navigation" id = "navbar">
-          <img src="assets/pp.jpg" id = "logo" width="100"/>
-            <a href = "https://scholar.google.com/citations?authuser=1&user=ubOhfnIAAAAJ" class = "navbarlink">SCHOLAR</a>
-            <a href = "https://github.com/MichaelTMatthews" class = "navbarlink">GITHUB</a>
-            <a href = "https://x.com/mitrma" class = "navbarlink">TWITTER</a>
-            <a href = "https://www.linkedin.com/in/michael-matthews-b7a5b7158/" class = "navbarlink">LINKEDIN</a>
-            <a href = "assets/cv.pdf" class = "navbarlink">CV</a>
-        </nav>
-    </div>
+<div class="top">
+  <div class="top-text">
+    <h1>Michael Matthews</h1>
 
-    <div id = "content">
-        <p>
-            I am Michael Matthews, a third-year PhD student at the University of Oxford supervised by <a href=https://www.jakobfoerster.com/>Prof. Jakob Foerster</a> as part of <a href=https://foersterlab.com/>FLAIR</a>.
-            I am broadly interested in reinforcement learning, especially with regards to goal-conditioned RL, exploration, self-supervised RL, long term decision making and autocurricula.
-        </p>
-        <p>
-            I am interning at FAIR in NYC with <a href=https://www.mikaelhenaff.com>Mikael Henaff</a> from June-Dec 2025.
-        </p>
+    <p>
+      <a href="https://scholar.google.com/citations?authuser=1&user=ubOhfnIAAAAJ">scholar</a> ·
+      <a href="https://github.com/MichaelTMatthews">github</a> ·
+      <a href="https://x.com/mitrma">twitter</a> ·
+      <a href="https://www.linkedin.com/in/michael-matthews-b7a5b7158/">linkedin</a> ·
+      <a href="assets/cv.pdf">cv</a>
+    </p>
 
-        <h1>Selected Publications</h1>
-        <table id = "index-table">
-            <tr>
-                <td><a href = "https://kinetix-env.github.io/">Kinetix</a></td>
-
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[ICLR 2025 <span style="color: cyan">Oral</span>]</span>
-                </td>
-            </tr>
-            <tr>
-                <td><a href = "https://craftaxenv.github.io/">Craftax</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[ICML 2024 <span style="color: yellow">Spotlight</span>]</span>
-                </td>
-            </tr>
-        </table>
-
-        <h1>Other Publications</h1>
-        <table id = "index-table3">
-
-
-            <tr>
-                                <td> <a href = "https://arxiv.org/abs/2509.00338?">SOL</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[preprint]</span>
-                </td>
-            </tr>
-            <tr>
-                                <td> <a href = "https://arxiv.org/abs/2404.06356">PGD</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[RLC 2024]</span>
-                </td>
-            </tr>
-            <tr>
-                                <td> <a href = "https://arxiv.org/abs/2402.12284">ReMiDi</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[ICML 2024]</span>
-                </td>
-            </tr>
-            <tr>
-                                <td> <a href = "https://arxiv.org/abs/2409.00853">JaxLife</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[ALIFE 2024]</span>
-                </td>
-            </tr>
-            <tr>
-                                <td> <a href = "https://arxiv.org/abs/2207.11584">HKS</a></td>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[CoLLAs 2022]</span>
-                </td>
-            </tr>
-        </table>
-
-
-        <h1>Short Bio</h1>
-
-        <style>
-    #index-table2 td:first-child {
-        /* Set a fixed width wide enough for the longest date string (e.g., [2023—....] or [2017—2020]) */
-        width: 105px; /* Adjust this value until it looks right */
-        text-align: center; /* Center the date block within the cell */
-    }
-    /* Optional: Remove the default vertical-align from the HTML */
-    #index-table2 td {
-        vertical-align: top;
-    }
-</style>
-      
-        <table id = "index-table2">
-            <tr>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[2025]</span>
-                </td>
-                <td>RS Intern at Meta FAIR</td>
-
-            </tr>
-            <tr>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[2023&mdash;....]</span>
-                </td>
-                <td>PhD Engineering at Oxford</td>
-
-            </tr>
-            <tr>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[2021&mdash;2023]</span>
-                </td>
-                <td>RL Researcher at VivaCity</td>
-
-            </tr>
-            <tr>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[2020&mdash;2021]</span>
-                </td>
-                <td>MSc Machine Learning at UCL</td>
-
-            </tr>
-            <tr>
-                <td style="vertical-align: text-top">
-                    <span style="white-space: nowrap; font-family: 'fira mono', monospace;">[2017&mdash;2020]</span>
-                </td>
-                <td>BA Computer Science at Cambridge</td>
-
-            </tr>
-        </table>
-
-      <h1>Contact</h1>
-      <p>
-        $firstname [dot] tryfan [dot] $lastname [at] gmail [dot] com
-      </p>
-
-
-
-
-    </div>
-
-<small style="color: white"> <br>Website style from <a href="https://gpfault.net/">gpfault.net</a></small>
-
+    <p>
+      I am a third-year DPhil (PhD) student at the University of Oxford supervised by
+      <a href="https://www.jakobfoerster.com/">Prof. Jakob Foerster</a> as part of
+      <a href="https://foersterlab.com/">FLAIR</a>. I am broadly interested in reinforcement learning,
+      especially goal-conditioned RL, exploration, self-supervised RL, long term decision making
+      and autocurricula.
+    </p>
+  </div>
+  <img src="assets/pp.jpg" class="headshot" alt="Michael Matthews">
 </div>
 
-<br/>
+<p>
+  During my DPhil I had the good fortune to intern with <a href="https://www.mikaelhenaff.com/">Mikael Henaff</a>
+  at <a href="https://ai.meta.com/research/">FAIR</a>.
+</p>
+
+<h2>Selected Publications</h2>
+<ul>
+  <li><span class="key"><a href="https://arxiv.org/abs/2410.23208">Kinetix</a></span> — ICLR 2025 <span style="color: cyan">Oral</span></li>
+  <li><span class="key"><a href="https://craftaxenv.github.io/">Craftax</a></span> — ICML 2024 <span style="color: yellow">Spotlight</span></li>
+</ul>
+
+<h2>Other Publications</h2>
+<ul>
+  <li><span class="key"><a href="https://arxiv.org/abs/2509.00338">SOL</a></span> — preprint</li>
+  <li><span class="key"><a href="https://arxiv.org/abs/2404.06356">PGD</a></span> — RLC 2024</li>
+  <li><span class="key"><a href="https://arxiv.org/abs/2402.12284">ReMiDi</a></span> — ICML 2024</li>
+  <li><span class="key"><a href="https://arxiv.org/abs/2409.00853">JaxLife</a></span> — ALIFE 2024</li>
+  <li><span class="key"><a href="https://arxiv.org/abs/2207.11584">HKS</a></span> — CoLLAs 2022</li>
+</ul>
+
+<h2>Short Bio</h2>
+<ul>
+  <li><span class="key">2025</span> — RS Intern at Meta FAIR</li>
+  <li><span class="key">2023–present</span> — PhD Engineering at Oxford</li>
+  <li><span class="key">2021–2023</span> — RL Researcher at VivaCity</li>
+  <li><span class="key">2020–2021</span> — MSc Machine Learning at UCL</li>
+  <li><span class="key">2017–2020</span> — BA Computer Science at Cambridge</li>
+</ul>
+
+<h2>Contact</h2>
+<p>$firstname [dot] tryfan [dot] $lastname [at] gmail [dot] com</p>
+
 </body>
 </html>

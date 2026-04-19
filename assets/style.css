@@ -1,6 +1,6 @@
 body {
   max-width: 80ch;
-  margin: 2em auto;
+  margin: 0 auto 2em;
   padding: 0 1em;
   background: #1a1d1f;
   color: #bbbbbb;
@@ -9,7 +9,17 @@ body {
 }
 
 h1, h2 {
-  color: #6a8bad;
+  color: #8fb0d6;
+}
+
+h2 {
+  margin-top: 1em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px dotted #353535;
+  margin: 2em 0;
 }
 
 a {
@@ -28,7 +38,7 @@ a:visited {
 .top {
   display: flex;
   gap: 1.5em;
-  align-items: center;
+  align-items: stretch;
 }
 
 .top-text {
@@ -36,13 +46,20 @@ a:visited {
   min-width: 0;
 }
 
-.top-text h1 {
+.top-text > p:first-child {
   margin-top: 0;
+}
+
+.top-text > p:last-child {
+  margin-bottom: 0;
 }
 
 .headshot {
   width: 200px;
   flex-shrink: 0;
+  object-fit: cover;
+  align-self: stretch;
+  height: auto;
 }
 
 ul {

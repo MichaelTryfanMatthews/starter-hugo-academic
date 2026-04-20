@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Learn Everything all at Once — Michael Matthews</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+
+<p><a href="../../index.html">home</a></p>
+
+<h1>Learning Everything all at Once</h1>
+
+<p><em>2026-04-20</em></p>
+
+<p>
+  This blog post is meant to serve as an informal and intuitive writeup for the LEO manuscript.
+  Code for all methods discussed on this page is in the purejaxgcrl repository.
+</p>
+
+<h2>Why GCRL?</h2>
+
+
+
+<h2>GCRL as RL</h2>
+
+<p>
+Let us consider a suboptimal trajectory gathered in a goal-conditioned maze environment. Our goal-conditioned policy
+$\pi(s, g)$ is used to maximise the expected discounted return from the goal conditioned reward function $\mathcal{R}(s, g)$
+for a commanded goal $g$.
+</p>
+
+<p><img src="maze.gif" alt="Maze" style="width: 100%; height: auto;"></p>
+
+<p>
+  The baseline approach is to simply learn on this trajectory with respect to the commanded goal. This is the default approach
+  and is formally equivalent to a regular MDP, where the goal space is just a component of the state space.
+</p>
+
+<p><img src="part2a.gif" alt="Maze" style="width: 100%; height: auto;"></p>
+
+<p>
+  Each pulse in this animation is meant to represent a learning update from the $(s, a, s')$ tuple at the source with respect to
+  the goal at the sink.
+</p>
+
+<h2>Goal Relabelling</h2>
+
+<p>
+  Surely we can do better? In our given trajectory we can see that our agent achieves many goals along the way, but this information
+  is never communicated to it in the learning step.
+</p>
+
+<p>
+  One solution is to employ goal relabelling, where we take transitions that were gathered through commanding
+  some goal $g$ and use these to learn with respect to some different goal $g'$. Note: This makes the transition off-policy,
+  meaning we have to abandon our beloved PPO and return to Q-learning 😱.
+</p>
+
+<p>
+  Taking a step back, what we are doing here is decomposing our decision problem into a true underlying environment
+  and a goal label, which can affect the reward but not the transition dynamics. We also assume that we have oracle access to
+  the goal conditioned reward function $\mathcal{R}(s, g)$ and can query this arbitrarily offline. While the true environment may be a black box, the goal
+  conditioning functions like a wrapper around it that we can control and manipulate.
+</p>
+
+<p>
+  The most common method for goal relabelling is <a href="https://arxiv.org/abs/1707.01495">Hindsight Experience Replay</a>,
+  where we relabel with a goal $g'$ that is achieved later in the episode (assuming the goal set has such a notion of binary achievability).
+</p>
+
+<p><img src="part2b.gif" alt="Maze" style="width: 100%; height: auto;"></p>
+
+<h2>All-Goals Relabelling</h2>
+
+<p>
+  HER is great and it works well empirically, but it feels like papering over a problem rather than addressing it. It also
+  leaves open many questions. Which goal do we use to relabel if we achieve many in an episode? What if our goal space
+  is such that we can complete multiple goals per timestep? What if our goal function is continuous and has no concept of completion?
+  We don't just want to relabel with positive examples of completed goals, what's the right mixing proportion?
+  Hold on... we don't even have to relabel with just a single goal - couldn't we relabel with many?
+</p>
+
+<p>
+  If we are working with a finite goal set, this line of thinking has one logical conclusion: relabel every transition with every goal.
+</p>
+
+<p><img src="all_goals_uvfa.gif" alt="Maze" style="width: 100%; height: auto;"></p>
+
+<p>
+  This has lots of nice properties. We extract maximal information from every transition by considering how it relates
+  to every goal in our goal set. An important point to note is that the motivation for HER can sometimes lead people into
+  the mindset that learning signal only exists in positive examples (where we achieve a goal). This may be close to the truth
+  in sparse reward environments, where almost all signal is negative, but is not generally the case. Even in these sparse reward
+  settings, updating with respect to unachieved goals can be useful to propagate bootstrapped value estimates.
+  Relabelling with all goals sidesteps this issue entirely, and does not even require the goals to be binary terminal in form.
+</p>
+
+<p>
+  However, this is <i>incredibly</i> slow, as it blows up your training data by a factor of $|\mathcal{G}|$.
+  This is impractical for any non-trivial goal set.
+</p>
+
+<p>
+  This begs the question: can we get the maximal information extraction properties of all-goals relabelling without making learning unbearably slow?
+</p>
+
+<h2>Learning Everything all at Once</h2>
+
+<p><img src="part2c.gif" alt="Maze" style="width: 100%; height: auto;"></p>
+
+
+</body>
+</html>

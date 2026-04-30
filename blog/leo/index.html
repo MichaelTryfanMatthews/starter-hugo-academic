@@ -23,27 +23,23 @@
 <p><em>2026-04-20</em></p>
 
 <p>
-  This blog post is meant to serve as an informal and intuitive writeup for the LEO manuscript.
-  Code for all methods discussed on this page is in the purejaxgcrl repository.
+  This blog post is meant to serve as an accessible writeup for the LEO manuscript.
+  Code for all methods discussed on this page is in the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> repository, which supports goal-conditioned Craftax and Gridworld environments.
 </p>
 
-<h2>Why GCRL?</h2>
-
-
-
-<h2>GCRL as RL</h2>
+<h2>Primer: GCRL</h2>
 
 <p>
-Let us consider a suboptimal trajectory gathered in a goal-conditioned maze environment. Our goal-conditioned policy
+  We consider the online goal-conditioned reinforcement learning (GCRL) paradigm. Our goal-conditioned policy
 $\pi(s, g)$ is used to maximise the expected discounted return from the goal conditioned reward function $\mathcal{R}(s, g)$
-for a commanded goal $g$.
+for a commanded goal $g$. We now consider a suboptimal trajectory gathered in a simple goal-conditioned maze environment.
 </p>
 
 <p><img src="maze.gif" alt="Maze" style="width: 100%; height: auto;"></p>
 
 <p>
-  The baseline approach is to simply learn on this trajectory with respect to the commanded goal. This is the default approach
-  and is formally equivalent to a regular MDP, where the goal space is just a component of the state space.
+  The easiest approach is to simply treat this like any other RL environment and learn on the gathered trajectory, with respect to the commanded goal.
+  We are implicitly stating that the goal space is just a component of the state space.
 </p>
 
 <p><img src="part2a.gif" alt="Maze" style="width: 100%; height: auto;"></p>
@@ -62,8 +58,7 @@ for a commanded goal $g$.
 
 <p>
   One solution is to employ goal relabelling, where we take transitions that were gathered through commanding
-  some goal $g$ and use these to learn with respect to some different goal $g'$. Note: This makes the transition off-policy,
-  meaning we have to abandon our beloved PPO and return to Q-learning 😱.
+  some goal $g$ and use these to learn with respect to some different goal $g'$. Note that this makes our data off-policy.
 </p>
 
 <p>
@@ -115,6 +110,10 @@ for a commanded goal $g$.
 </p>
 
 <h2>Learning Everything all at Once</h2>
+
+<p>
+  The answer is yes we can!
+</p>
 
 <p><img src="part2c.gif" alt="Maze" style="width: 100%; height: auto;"></p>
 

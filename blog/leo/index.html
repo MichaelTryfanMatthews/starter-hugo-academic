@@ -39,7 +39,7 @@ for a commanded goal $g$. We now consider a suboptimal trajectory gathered in a 
 
 <p>
   The easiest approach is to simply treat this like any other RL environment and learn on the gathered trajectory, with respect to the commanded goal.
-  We are implicitly stating that the goal space is just a component of the state space.
+  Our implicit assumption here is that the goal space is just a component of the state space.
 </p>
 
 <p><img src="part2a.gif" alt="Maze" style="width: 100%; height: auto;"></p>
@@ -63,7 +63,7 @@ for a commanded goal $g$. We now consider a suboptimal trajectory gathered in a 
 
 <p>
   Taking a step back, what we are doing here is decomposing our decision problem into a true underlying environment
-  and a goal label, which can affect the reward but not the transition dynamics. We also assume that we have oracle access to
+  and a goal conditioning layer, which can affect the reward but not the transition dynamics. We also assume that we have oracle access to
   the goal conditioned reward function $\mathcal{R}(s, g)$ and can query this arbitrarily offline. While the true environment may be a black box, the goal
   conditioning functions like a wrapper around it that we can control and manipulate.
 </p>
@@ -94,10 +94,10 @@ for a commanded goal $g$. We now consider a suboptimal trajectory gathered in a 
 <p>
   This has lots of nice properties. We extract maximal information from every transition by considering how it relates
   to every goal in our goal set. An important point to note is that the motivation for HER can sometimes lead people into
-  the mindset that learning signal only exists in positive examples (where we achieve a goal). This may be close to the truth
-  in sparse reward environments, where almost all signal is negative, but is not generally the case. Even in these sparse reward
-  settings, updating with respect to unachieved goals can be useful to propagate bootstrapped value estimates.
-  Relabelling with all goals sidesteps this issue entirely, and does not even require the goals to be binary terminal in form.
+  the mindset that learning signal only exists in positive examples (where we achieve a goal), which is not generally the case.
+  There is information content in all transition-goal pairings. Furthermore, these updates will propagate bootstrapped value estimates,
+  which is especially useful when only considering single step bootstrapped returns.
+  Relabelling with all goals sidesteps the issue of label selection entirely, and therefore also removes the assumption for goals to be binary terminal in form.
 </p>
 
 <p>
@@ -112,11 +112,78 @@ for a commanded goal $g$. We now consider a suboptimal trajectory gathered in a 
 <h2>Learning Everything all at Once</h2>
 
 <p>
-  The answer is yes we can!
+  The answer is yes! To achieve all-goals relabelling without incurring intolerably slow learning, we propose pushing (or <i>currying</i>)
+  the goal space into the output of the $Q$-network. That is we reparameterise our network from
+</p>
+
+$$Q(s,g): \mathcal{S} \times \mathcal{G} \rightarrow \mathcal{A}$$
+
+<p>
+  to
+</p>
+
+$$Q(s): \mathcal{S} \rightarrow \mathcal{G} \times \mathcal{A}$$
+
+<p>
+  This gives an 'all-goals' $Q$-network that, for a given state, outputs the $Q$-values for every goal-action pair. This allows
+  us to perform an all-goals learning step with a single backward pass of the network.
+</p>
+
+$$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a | s))^2$$
+<p>
+    We refer to this method as Learning Everything all at Once (LEO).
 </p>
 
 <p><img src="part2c.gif" alt="Maze" style="width: 100%; height: auto;"></p>
 
+<p>
+  Note that we are not the first to propose this type of all-goals update, with Horde (<a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">Sutton et al. 2011</a>) and
+  $Q$-map (<a href="https://arxiv.org/abs/1810.02927">Pardo et al. 2018</a>) being the most notable examples.
+  The basic LEO method could be considered a generalisation of $Q$-Map to arbitrary discrete goal sets or equivalently as a
+  Horde network with a learned shared embedding and a parallelised update.
+</p>
+
+<p>
+  Skipping ahead a bit, we do see that LEO is significantly faster than all-goals relabelling, as expected.
+</p>
+<p style="text-align: center;">
+  <img src="sps.png" alt="Maze" style="width: 50%; height: auto;">
+</p>
+
+<h2>Goal-Conditioned Craftax</h2>
+
+<p>
+  We now consider applying GCRL to the challenging <a href="https://github.com/MichaelTMatthews/Craftax">Craftax</a> environment.
+  We define a large, heterogeneous set of 512 goals in the environment that span from collecting specific amounts of every type of resource,
+  standing next to every type of block and enemy and reaching various levels of the dungeon. For a full listing of goals see the appendices of the manuscript.
+</p>
+
+<p style="text-align: center;">
+  <img src="craftaxgc.png" alt="Maze" style="width: 50%; height: auto;">
+</p>
+
+<p>
+  The agent in the above image is simultaneously completing the goals <i>tools/wood_sword</i>, <i>tools/stone_pickaxe</i>,
+  <i>inventory/wood_5</i>, <i>inventory/stone_4</i>, <i>block_map/furnace_right</i>, as well as others.
+</p>
+
+<p>
+  Craftax has so far been unsolved by single-task reinforcement learning methods, in large part due to its long horizons
+  and hard exploration components. An alternative paradigm for solving these types of environments is to define a large goal set
+  that gives good state coverage and to train a goal-conditioned agent. While this may seem like a harder learning problem,
+  the hope is that a dense enough set of goals will overcome the exploration problem.
+</p>
+
+<p>
+  This approach is somewhat similar to reward shaping - a tried and tested method.
+  The crucial difference that we can be far less precise with our goal set, potentially including many goals that don't end up
+  being relevant to solving the environment. Reward shaping usually involves repeated trial and error of training an agent,
+  observing the final performance and iteratively tweaking the reward function. Ideally with our approach, we can simply
+  define a large goal set once, and while the useless or counterproductive goals may waste time they won't sink the entire
+  training run.
+</p>
+
+<h2>Craftax Results</h2>
 
 </body>
 </html>

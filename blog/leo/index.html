@@ -260,10 +260,36 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   <img src="ppo_leo_per_goal.png" alt="Maze" style="width: 100%; height: auto;">
 </p>
 
-<h2>LEO for Continuous Control</h2>
+<p>
+  This gives us a fairly straightforward recipe. Use the most powerful algorithm at our disposal (for on-policy RL this tends to be PPO)
+  as the core actor. Then use LEO as an 'observer', with a small BC term to kickstart the learning process for the actor on harder goals.
+</p>
 
+<h2>What next?</h2>
 
-<h2>Conclusion</h2>
+<p>
+  I think this foray into efficient all-goals learning has demonstrated it's utility, while also showing it still has limitations in its current form.
+  Future questions to answer include:
+</p>
+
+<ul>
+  <li>What if we have a very large or infinite goal space? We briefly investigate this in the manuscript by defining a finite quantised grid
+  over $\mathbb{R}^2$ but this is clearly a hack. Is there a more elegant or complete solution?</li>
+  <li>We have made decent progress on the learning side of the GCRL problem. Maybe this is no longer the bottleneck and things like dynamic goal
+  sampling would now provide greater benefits.</li>
+  <li>Can we actually now use this to make progress on hard benchmarks like Craftax, the NLE or Minecraft?</li>
+  <li>Could this be incorporated in some way into language-conditioned agents e.g. VLAs?</li>
+  <li>Can this base LEO method be improved, without having to resort to only using it as a BC term?</li>
+</ul>
+
+<p>
+  Myself and others in <a href="https://foersterlab.com/">FLAIR</a> are interested in these problems. If you are too then feel free to reach out!
+</p>
+
+<p>
+  I have spent some time tidying up all the code for this project in the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> codebase,
+  which should now serve as a simple and accessible starting point for anyone interested in this line of work.
+</p>
 
 <h3>Acknowlegements</h3>
 

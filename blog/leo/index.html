@@ -168,8 +168,8 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p>
-  Craftax has so far been unsolved by single-task reinforcement learning methods, in large part due to its long horizons
-  and hard exploration components. An alternative paradigm for solving these types of environments is to define a large goal set
+  Craftax has so far been unsolved by single-task reinforcement learning methods, in large part due to its properties of long horizons
+  and hard exploration. An alternative paradigm for solving these types of environments is to define a large goal set
   that gives good state coverage and to train a goal-conditioned agent. While this may seem like a harder learning problem,
   the hope is that a dense enough set of goals will overcome the exploration problem.
 </p>
@@ -183,7 +183,89 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   training run.
 </p>
 
+<p>
+  If we have powerful enough GCRL algorithms and processes, then I believe this is a promising and scalable approach to injecting prior
+  knowledge to solve hard exploration problems.
+</p>
+
 <h2>Craftax Results</h2>
+
+<p>
+  We now compare algorithms based on their mean success rate over all goals in Craftax. We use the <a href="https://arxiv.org/abs/2407.04811">PQN</a> algorithm as our
+  base implementation and adapt it for both HER and LEO, since it can work on off-policy data. We also compare to PPO.
+  We give each algorithm the same hyperparameter tuning budget (details in manuscript) and then compare over 1 billion
+  timesteps with 5 repeats.
+</p>
+
+<p style="text-align: center;">
+  <img src="craftax_results.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<p>
+  We see that LEO does better than the baselines - great! However, when taking a closer look at the per-goal success rates,
+  we see something strange.
+</p>
+
+<p style="text-align: center;">
+  <img src="craftax_per_goal_results.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<p>
+  On harder goals, like <i>dungeon_level/dlvl_1</i>, LEO is the only method to achieve non-zero solve rates. However,
+  on easier goals like <i>block_map/plant_right</i>, while all the baselines converge close to 100% success rate, LEO
+  still does OK but converges around 80% success rate. Why is this?
+</p>
+
+<p>
+  The likely answer is that the shared <i>unconditioned</i> trunk serves as an information bottleneck. When acting, the network has no way
+  of knowing which goal is being commanded, and must devote its limited capacity to producing accurate $Q$-values across
+  all goals. This can be seen as a form of (very) late fusion of the state and goal modalities.
+</p>
+
+<p>
+  Intuitively, I find it helpful to think of LEO as a 'coarse-grained data sponge'. It will absorb all the information possible
+  from every transition, but will not produce high fidelity value estimates. Despite this, the LEO value estimates are
+  still clearly directionally useful, as evidenced by its success on hard goals. This points to a better way to use LEO.
+</p>
+
+<h2>LEO as a Teacher</h2>
+
+<p>
+  Rather than acting directly with the LEO network, we can instead use it as a teacher for a <a href="https://proceedings.mlr.press/v37/schaul15.pdf">UVFA</a>-style network (we use
+  UVFA to denote the traditional GCRL approach where the goal is in the observation). We tried pairing LEO with both a PQN
+  and PPO network, and found the PPO approach to be superior.
+</p>
+
+<p>
+  Specifically, we act and learn with a UVFA-style PPO network as usual. We then also train a LEO network off-policy on the
+  same stream of data produced by the PPO network. We then add a small behaviour cloning term that pushes the PPO policy $\pi(s, g)$
+  network towards $\text{argmax}_a(Q_{\text{LEO}}(s, a))$ and the PPO value network $V(s, g)$ towards $\text{max}_a(Q_{\text{LEO}}(s, a))$.
+  This allows us to reap the benefits of the LEO 'data sponge', without sacrificing the fidelity and early fusion of the UVFA approach.
+</p>
+
+<p>
+  We see that this approach dramatically outperforms all other methods.
+</p>
+
+<p style="text-align: center;">
+  <img src="ppo_leo.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<p>
+  And we also see that this gets the best of both worlds - learning how to solve hard goals without sacrificing performance
+  on the easier ones.
+</p>
+
+<p style="text-align: center;">
+  <img src="ppo_leo_per_goal.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<h2>LEO for Continuous Control</h2>
+
+
+<h2>Conclusion</h2>
+
+<h3>Acknowlegements</h3>
 
 </body>
 </html>

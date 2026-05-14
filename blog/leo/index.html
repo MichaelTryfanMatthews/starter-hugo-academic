@@ -171,12 +171,15 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   Craftax has so far been unsolved by single-task reinforcement learning methods, in large part due to its properties of long horizons
   and hard exploration. An alternative paradigm for solving these types of environments is to define a large goal set
   that gives good state coverage and to train a goal-conditioned agent. While this may seem like a harder learning problem,
-  the hope is that a dense enough set of goals will overcome the exploration problem.
+  the hope is that a dense enough set of goals will overcome the exploration problem. The reason existing approaches
+  haven't solved Craftax (or comparable environments like the NLE or Minecraft) is not because the models lack capacity
+  to represent the optimal policy, so it seems like a beneficial tradeoff if we can make the exploration problem easier
+  by making the representational problem harder.
 </p>
 
 <p>
-  This approach is somewhat similar to reward shaping - a tried and tested method.
-  The crucial difference that we can be far less precise with our goal set, potentially including many goals that don't end up
+  This approach looks superficially similar to reward shaping.
+  The crucial difference is that we can be far less precise with our goal set, potentially including many goals that don't end up
   being relevant to solving the environment. Reward shaping usually involves repeated trial and error of training an agent,
   observing the final performance and iteratively tweaking the reward function. Ideally with our approach, we can simply
   define a large goal set once, and while the useless or counterproductive goals may waste time they won't sink the entire
@@ -211,28 +214,29 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p>
-  On harder goals, like <i>dungeon_level/dlvl_1</i>, LEO is the only method to achieve non-zero solve rates. However,
-  on easier goals like <i>block_map/plant_right</i>, while all the baselines converge close to 100% success rate, LEO
-  still does OK but converges around 80% success rate. Why is this?
+  On harder goals, like <i>dungeon_level/dlvl_1</i> (descend to the first level of the dungeon), LEO is the only method to achieve non-zero solve rates. However,
+  on easier goals like <i>block_map/plant_right</i> (plant a sapling to the right of the player), while all the baselines converge close to 100% success rate, LEO
+  plateaus at only 80% success rate. Why is this?
 </p>
 
 <p>
-  The likely answer is that the shared <i>unconditioned</i> trunk serves as an information bottleneck. When acting, the network has no way
+  The answer is that the shared <i>unconditioned</i> trunk serves as an information bottleneck. When acting, the network has no way
   of knowing which goal is being commanded, and must devote its limited capacity to producing accurate $Q$-values across
-  all goals. This can be seen as a form of (very) late fusion of the state and goal modalities.
+  all goals. Furthermore, the LEO network has to learn a single embedding from which $Q$-values for all goals can be determined with a single linear layer.
+  This can be seen as a form of late fusion of the state and goal modalities.
 </p>
 
 <p>
   Intuitively, I find it helpful to think of LEO as a 'coarse-grained data sponge'. It will absorb all the information possible
   from every transition, but will not produce high fidelity value estimates. Despite this, the LEO value estimates are
-  still clearly directionally useful, as evidenced by its success on hard goals. This points to a better way to use LEO.
+  still clearly <i>directionally</i> useful, as evidenced by its success on hard goals. This points to a better way to use LEO.
 </p>
 
 <h2>LEO as a Teacher</h2>
 
 <p>
   Rather than acting directly with the LEO network, we can instead use it as a teacher for a <a href="https://proceedings.mlr.press/v37/schaul15.pdf">UVFA</a>-style network (we use
-  UVFA to denote the traditional GCRL approach where the goal is in the observation). We tried pairing LEO with both a PQN
+  UVFA to denote the traditional GCRL approach where the goal is fed into the observation). We tried pairing LEO with both a PQN
   and PPO network, and found the PPO approach to be superior.
 </p>
 
@@ -240,7 +244,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   Specifically, we act and learn with a UVFA-style PPO network as usual. We then also train a LEO network off-policy on the
   same stream of data produced by the PPO network. We then add a small behaviour cloning term that pushes the PPO policy $\pi(s, g)$
   network towards $\text{argmax}_a(Q_{\text{LEO}}(s, a))$ and the PPO value network $V(s, g)$ towards $\text{max}_a(Q_{\text{LEO}}(s, a))$.
-  This allows us to reap the benefits of the LEO 'data sponge', without sacrificing the fidelity and early fusion of the UVFA approach.
+  This allows us to reap the benefits of the LEO 'data sponge', without sacrificing the fidelity and early fusion of UVFA.
 </p>
 
 <p>
@@ -252,7 +256,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p>
-  And we also see that this gets the best of both worlds - learning how to solve hard goals without sacrificing performance
+  We can have our cake and eat it (or dungeon crawl while also gardening?). PPO+LEO solves hard goals without sacrificing performance
   on the easier ones.
 </p>
 
@@ -269,7 +273,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 
 <p>
   I think this foray into efficient all-goals learning has demonstrated it's utility, while also showing it still has limitations in its current form.
-  Future questions to answer include:
+  Some interesting future directions include:
 </p>
 
 <ul>
@@ -278,8 +282,8 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   <li>We have made decent progress on the learning side of the GCRL problem. Maybe this is no longer the bottleneck and things like dynamic goal
   sampling would now provide greater benefits.</li>
   <li>Can we actually now use this to make progress on hard benchmarks like Craftax, the NLE or Minecraft?</li>
-  <li>Could this be incorporated in some way into language-conditioned agents e.g. VLAs?</li>
-  <li>Can this base LEO method be improved, without having to resort to only using it as a BC term?</li>
+  <li>Could this be incorporated in some way into language-conditioned agents like VLAs?</li>
+  <li>Can the base LEO method be improved, without having to resort to only using it as a BC term?</li>
 </ul>
 
 <p>
@@ -287,7 +291,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p>
-  I have spent some time tidying up all the code for this project in the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> codebase,
+  I have spent some time refactoring all the code for this project into the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> codebase,
   which should now serve as a simple and accessible starting point for anyone interested in this line of work.
 </p>
 

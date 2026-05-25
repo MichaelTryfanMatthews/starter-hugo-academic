@@ -132,10 +132,13 @@ $$Q(s): \mathcal{S} \rightarrow \mathcal{G} \times \mathcal{A}$$
 
 <p>
   This gives an 'all-goals' $Q$-network that, for a given state, outputs the $Q$-values for every goal-action pair. This allows
-  us to perform an all-goals learning step with a single backward pass of the network.
+  us to perform an all-goals learning step with a single backward pass of the network:
 </p>
 
 $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a | s))^2$$
+<p>
+  where $\mathcal{R}(s')$ is the vector of rewards for all goals.
+</p>
 <p>
     We refer to this method as Learning Everything all at Once (LEO).
 </p>
@@ -143,8 +146,13 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 <p><img src="part2c.gif" alt="Maze" style="width: 100%; height: auto;"></p>
 
 <p>
-  Note that we are not the first to propose this type of all-goals update, with Horde (<a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">Sutton et al. 2011</a>) and
-  $Q$-map (<a href="https://arxiv.org/abs/1810.02927">Pardo et al. 2018</a>) being the most notable examples.
+  LEO can therefore be seen as a method that takes the power of all-goals learning, without the enormous computational costs
+  of all-goals relabelling. We later see, with a goal set of size 512, that LEO is around 250 times faster than all-goals relabelling.
+</p>
+
+<p>
+  Note that we are not the first to propose this type of all-goals update, with <a href="https://www.cs.swarthmore.edu/~meeden/DevelopmentalRobotics/horde1.pdf">Horde</a> and
+  <a href="https://arxiv.org/abs/1810.02927">$Q$-map</a> being the most notable examples.
   The basic LEO method could be considered a generalisation of $Q$-Map to arbitrary discrete goal sets or equivalently as a
   Horde network with a learned shared embedding and a parallelised update.
 </p>
@@ -180,9 +188,9 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   Craftax has so far been unsolved by single-task reinforcement learning methods, in large part due to its properties of long horizons
   and hard exploration. An alternative paradigm for solving these types of environments is to define a large goal set
   that gives good state coverage and to train a goal-conditioned agent. While this may seem like a harder learning problem,
-  the hope is that a dense enough set of goals will overcome the exploration problem. The reason existing approaches
+  the hope is that a dense enough set of goals will overcome the exploration problem. It seems likely that the reason existing approaches
   haven't solved Craftax (or comparable environments like the NLE or Minecraft) is not because the models lack capacity
-  to represent the optimal policy, so it seems like a beneficial tradeoff if we can make the exploration problem easier
+  to represent the optimal policy but because of exploration. Therefore it seems like a beneficial tradeoff if we can make the exploration problem easier
   by making the representational problem harder.
 </p>
 
@@ -271,7 +279,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p>
-  We see that this approach dramatically outperforms all other methods.
+  We see that this approach dramatically outperforms all other methods, with the PPO variant especially doing very well.
 </p>
 
 <p style="text-align: center;">
@@ -333,7 +341,7 @@ LEO/Dual LEO may be useful if your problem matches the following specification:
 <h2>What next?</h2>
 
 <p>
-  I think this foray into efficient all-goals learning has demonstrated it's utility, while also showing it still has limitations in its current form.
+  I think this foray into efficient all-goals learning has demonstrated its utility, while also showing it still has limitations in its current form.
   Some interesting future directions include:
 </p>
 
@@ -342,7 +350,7 @@ LEO/Dual LEO may be useful if your problem matches the following specification:
   over $\mathbb{R}^2$ but this is clearly a hack. Is there a more elegant or complete solution?</li>
   <li>We have made decent progress on the learning side of the GCRL problem. Maybe this is no longer the bottleneck and things like dynamic goal
   sampling would now provide greater benefits.</li>
-  <li>Can we actually now use this to make progress on hard benchmarks like Craftax, the NLE or Minecraft?</li>
+  <li>Can we actually now use this to solve hard benchmarks like Craftax, the NLE or Minecraft?</li>
   <li>Could this be incorporated in some way into language-conditioned agents like VLAs?</li>
   <li>Can the base LEO method itself be improved enough that it can be an actor?</li>
 </ul>

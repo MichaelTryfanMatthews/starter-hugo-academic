@@ -135,7 +135,7 @@ $$Q(s): \mathcal{S} \rightarrow \mathcal{G} \times \mathcal{A}$$
   us to perform an all-goals learning step with a single backward pass of the network:
 </p>
 
-$$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a | s))^2$$
+$$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(s')[a'] - Q(s)[a])^2$$
 <p>
   where $\mathcal{R}(s')$ is the vector of rewards for all goals.
 </p>
@@ -265,7 +265,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 <p>
   We train both a UVFA-style PQN network and a LEO network off-policy on the same stream of data. We act greedily with respect to the $Q$-values
   obtained through a linear combination of the two networks:
-  $$Q(s,a,g) = \alpha \cdot Q_{\text{LEO}}(s, a, g) + (1 - \alpha) * Q_{\text{UVFA}}(s,a,g)$$
+  $$Q(s,a,g) = \alpha \cdot Q_{\text{LEO}}(s)[a, g] + (1 - \alpha) \cdot Q_{\text{UVFA}}(s,g)[a]$$
 </p>
 
 <h3>
@@ -275,7 +275,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 <p>
   We act and learn with a UVFA-style PPO network as usual. We then also train a LEO network off-policy on the
   same stream of data produced by the PPO network. We then add a small behaviour cloning term that pushes the PPO policy $\pi(s, g)$
-  network towards $\text{argmax}_a(Q_{\text{LEO}}(s, a))$ and the PPO value network $V(s, g)$ towards $\text{max}_a(Q_{\text{LEO}}(s, a))$.
+  network towards $\text{argmax}_a(Q_{\text{LEO}}(s)[a, g])$ and the PPO value network $V(s, g)$ towards $\text{max}_a(Q_{\text{LEO}}(s)[a, g])$.
 </p>
 
 <p>
@@ -332,7 +332,7 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 
 LEO/Dual LEO may be useful if your problem matches the following specification:
 <ul>
-  <li>Your problem can be phrased as goal-conditioned MDP.</li>
+  <li>Your problem can be phrased as a goal-conditioned MDP.</li>
   <li>You have a finite goal set.</li>
   <li>Your goal set is small enough to be an output layer of a network.</li>
   <li>Querying the goal-conditioned reward function is cheap.</li>

@@ -23,8 +23,14 @@
 <p><em>2026-05-14</em></p>
 
 <p>
-  This blog post is meant to serve as an accessible writeup for the LEO manuscript.
+  This blog post is meant to serve as an accessible writeup for the <a href="https://arxiv.org/abs/2605.23551">LEO manuscript</a>.
   Code for all methods discussed on this page is in the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> repository, which supports goal-conditioned Craftax and Gridworld environments.
+</p>
+
+<h2>Short Summary</h2>
+<p>
+  We investigate sidestepping hindsight relabelling in goal-conditioned RL by learning with respect to all goals at once.
+  We show significantly better performance on goal-conditioned <a href="https://craftaxenv.github.io/">Craftax</a> than existing baselines.
 </p>
 
 <h2>Primer: GCRL</h2>
@@ -143,28 +149,31 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   Horde network with a learned shared embedding and a parallelised update.
 </p>
 
-<p>
-  Skipping ahead a bit, we do see that LEO is significantly faster than all-goals relabelling, as expected.
-</p>
-<p style="text-align: center;">
-  <img src="sps.png" alt="Maze" style="width: 50%; height: auto;">
-</p>
-
 <h2>Goal-Conditioned Craftax</h2>
 
 <p>
   We now consider applying GCRL to the challenging <a href="https://github.com/MichaelTMatthews/Craftax">Craftax</a> environment.
+  Craftax is an unsolved benchmark written entirely in JAX where the player must mine, craft and fight enemies to win the game.
   We define a large, heterogeneous set of 512 goals in the environment that span from collecting specific amounts of every type of resource,
   standing next to every type of block and enemy and reaching various levels of the dungeon. For a full listing of goals see the appendices of the manuscript.
 </p>
 
-<p style="text-align: center;">
-  <img src="craftaxgc.png" alt="Maze" style="width: 50%; height: auto;">
-</p>
+<table align="center">
+  <tr>
+    <td align="center"><img src="craftax_40_stone.gif" width="240"/></td>
+    <td align="center"><img src="craftax_water.gif" width="240"/></td>
+    <td align="center"><img src="craftax_dlvl1.gif" width="240"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Goal #114</b> <br> <i>inventory/stone_40-44</i><br/><b>Collect 40-44 stone</b></td>
+    <td align="center"><b>Goal #208</b> <br> <i>block_map/water_up</i><br/><b>Stand below water</b></td>
+    <td align="center"><b>Goal #492</b> <br> <i>dungeon_level/dlvl_1</i><br/><b>Reach dungeon level 1</b></td>
+  </tr>
+</table>
 
 <p>
-  The agent in the above image is simultaneously completing the goals <i>tools/wood_sword</i>, <i>tools/stone_pickaxe</i>,
-  <i>inventory/wood_5</i>, <i>inventory/stone_4</i>, <i>block_map/furnace_right</i>, as well as others.
+  The above agent has been trained over the entire goal set and is shown being commanded various goals.
+  The agent was trained using Dual LEO (PPO), which we will introduce later.
 </p>
 
 <p>
@@ -236,15 +245,29 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 
 <p>
   Rather than acting directly with the LEO network, we can instead use it as a teacher for a <a href="https://proceedings.mlr.press/v37/schaul15.pdf">UVFA</a>-style network (we use
-  UVFA to denote the traditional GCRL approach where the goal is fed into the observation). We tried pairing LEO with both a PQN
-  and PPO network, and found the PPO approach to be superior.
+  UVFA to denote the traditional GCRL approach where the goal is fed into the observation). This allows us to reap the benefits of the LEO 'data sponge', without sacrificing the fidelity and early fusion of UVFA.
+  We consider two methods: pairing LEO with both a PPO and PQN network respectively.
+  We call this approach Dual LEO.
 </p>
 
+<h3>
+  Dual LEO (PQN)
+</h3>
+
 <p>
-  Specifically, we act and learn with a UVFA-style PPO network as usual. We then also train a LEO network off-policy on the
+  We train both a UVFA-style PQN network and a LEO network off-policy on the same stream of data. We act greedily with respect to the $Q$-values
+  obtained through a linear combination of the two networks:
+  $$Q(s,a,g) = \alpha \cdot Q_{\text{LEO}}(s, a, g) + (1 - \alpha) * Q_{\text{UVFA}}(s,a,g)$$
+</p>
+
+<h3>
+  Dual LEO (PPO)
+</h3>
+
+<p>
+  We act and learn with a UVFA-style PPO network as usual. We then also train a LEO network off-policy on the
   same stream of data produced by the PPO network. We then add a small behaviour cloning term that pushes the PPO policy $\pi(s, g)$
   network towards $\text{argmax}_a(Q_{\text{LEO}}(s, a))$ and the PPO value network $V(s, g)$ towards $\text{max}_a(Q_{\text{LEO}}(s, a))$.
-  This allows us to reap the benefits of the LEO 'data sponge', without sacrificing the fidelity and early fusion of UVFA.
 </p>
 
 <p>
@@ -252,22 +275,60 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
 </p>
 
 <p style="text-align: center;">
-  <img src="ppo_leo.png" alt="Maze" style="width: 100%; height: auto;">
+  <img src="dual_leo.png" alt="Maze" style="width: 100%; height: auto;">
 </p>
 
 <p>
-  We can have our cake and eat it (or dungeon crawl while also gardening?). PPO+LEO solves hard goals without sacrificing performance
+  We can have our cake and eat it (or dungeon crawl while also gardening?). Dual LEO solves hard goals without sacrificing performance
   on the easier ones.
 </p>
 
 <p style="text-align: center;">
-  <img src="ppo_leo_per_goal.png" alt="Maze" style="width: 100%; height: auto;">
+  <img src="dual_leo_per_goal.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<h2>
+  Why does Dual LEO work?
+</h2>
+
+<p>
+  Taking a closer look at Dual LEO (PQN) performance on a specific goal <i>inventory/coal_1</i> reveals something very interesting.
+  Note that this goal is never achieved by PQN by itself (i.e. just a UVFA $Q$-network, equivalent to Dual LEO (PQN) with $\alpha=0$).
 </p>
 
 <p>
-  This gives us a fairly straightforward recipe. Use the most powerful algorithm at our disposal (for on-policy RL this tends to be PPO)
-  as the core actor. Then use LEO as an 'observer', with a small BC term to kickstart the learning process for the actor on harder goals.
+    We consider the success rate of this goal when acting greedily with respect to (1) the LEO network (2) the UVFA network and (3) the Dual LEO linear combination of the two networks.
 </p>
+
+<p style="text-align: center;">
+  <img src="dual_leo_components.png" alt="Maze" style="width: 100%; height: auto;">
+</p>
+
+<p>
+  What we see is that the LEO network learns to achieve non-zero success rate on this goal long before the UVFA network does.
+  This then translates to the Dual LEO actor achieving this goal, meaning we now have on-policy examples of the goal being commanded and solved.
+  This in turn then allows the UVFA network to learn how to achieve the goal, where it then quickly surpasses the LEO network.
+</p>
+
+<p>
+  For Dual LEO (PQN) we found a low $\alpha$ of around $0.3$ to be best, meaning that at convergence it is mostly the UVFA network
+  that influences the policy. This vindicates the concept of LEO as a teacher. LEO is great at internalising all data with respect to all goals,
+  enough to generate some good enough on-policy trajectories to get the UVFA network going.
+</p>
+
+<p>
+  Note that the benefits of Dual LEO are therefore entirely tied to the exploration problem and online RL.
+</p>
+
+<h2>When should I use LEO/Dual LEO?</h2>
+
+LEO/Dual LEO may be useful if your problem matches the following specification:
+<ul>
+  <li>Your problem can be phrased as goal-conditioned MDP.</li>
+  <li>You have a finite goal set.</li>
+  <li>Your goal set is small enough to be an output layer of a network.</li>
+  <li>Querying the goal-conditioned reward function is cheap.</li>
+</ul>
 
 <h2>What next?</h2>
 
@@ -283,19 +344,17 @@ $$\mathcal{L} = (\mathcal{R}(s') + \gamma \cdot \text{max}_{a'}Q(a'| s') - Q(a |
   sampling would now provide greater benefits.</li>
   <li>Can we actually now use this to make progress on hard benchmarks like Craftax, the NLE or Minecraft?</li>
   <li>Could this be incorporated in some way into language-conditioned agents like VLAs?</li>
-  <li>Can the base LEO method be improved, without having to resort to only using it as a BC term?</li>
+  <li>Can the base LEO method itself be improved enough that it can be an actor?</li>
 </ul>
-
-<p>
-  Myself and others in <a href="https://foersterlab.com/">FLAIR</a> are interested in these problems. If you are too then feel free to reach out!
-</p>
 
 <p>
   I have spent some time refactoring all the code for this project into the <a href="https://github.com/MichaelTMatthews/purejaxgcrl">purejaxgcrl</a> codebase,
   which should now serve as a simple and accessible starting point for anyone interested in this line of work.
 </p>
 
-<h3>Acknowlegements</h3>
+<h3>Acknowledgements</h3>
+
+Thank you to Cédric Colas, Scott Fujimoto and Jakob Foerster for feedback in the writing of this blog post.
 
 </body>
 </html>
